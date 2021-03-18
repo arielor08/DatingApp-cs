@@ -449,3 +449,8 @@ $RECYCLE.BIN/
 
 appsettings.json
 
+##SSL Keys and Certificate
+ssl
+server.crt
+server.key
+
