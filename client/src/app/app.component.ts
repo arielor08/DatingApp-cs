@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'The Dating App';
+
   users: any;
 
-  constructor(private htpp: HttpClient) {}
+  constructor(private htpp: HttpClient) { }
 
   ngOnInit(): void {
     this.htpp.get('https://localhost:5001/api/users').subscribe(
