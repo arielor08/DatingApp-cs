@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../_models/user';
+import { AccountService } from '../_service/account.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,10 +12,10 @@ export class NavComponent implements OnInit {
   title: string = 'Dating App';
   isActive: string = 'is-active';
   userModel: any = {
-    user: '',
+    userName: '',
     password: ''
   }
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.activeNavBurger();
@@ -22,8 +25,17 @@ export class NavComponent implements OnInit {
     return this.isActive = this.isActive ? '' : 'is-active'
   }
 
-  public login():void{
-    console.log(this.userModel);
+  public login(): void {
+    this.accountService.login(this.userModel).subscribe(
+      () => {
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
+  public logout() {
+    this.accountService.logout();
+  }
 }
