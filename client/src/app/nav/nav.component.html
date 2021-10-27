@@ -1,70 +1,88 @@
-<nav class="navbar is-dark p-4 navbar-center" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand ">
-    <a class="navbar-item" href="#">
-      <span class="title has-text-white">{{title}}</span>
-    </a>
-
-    <a role="button" class="navbar-burger" (click)="activeNavBurger()" aria-label="menu" aria-expanded="false"
-      data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu {{isActive}}">
-    <div class="navbar-start is-hidden">
-      <a class="navbar-item">
-        Match
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand ">
+      <a class="navbar-item" href="#">
+        <span class="title has-text-white">{{title}}</span>
       </a>
 
-      <a class="navbar-item">
-        Link
+      <a role="button" class="navbar-burger" (click)="activeNavBurger()" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Messages
-        </a>
-
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
-          </a>
-          <a class="navbar-item">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
-          </a>
-        </div>
-      </div>
     </div>
 
-    <div class="navbar-end">
-      <form #loginForm="ngForm" class="field-body" (ngSubmit)="login()">
-        <div class="navbar-item">
-          <div class="control">
-            <input [(ngModel)]="userModel.user" class="input" type="text" name="user" id="user" placeholder="User">
-          </div>
-        </div>
-        <div class="navbar-item">
-          <div class="control">
-            <input [(ngModel)]="userModel.password" class="input" type="text" name="password" id="password"
-              placeholder="Password">
-          </div>
-        </div>
-        <div class="navbar-item">
-          <div class="buttons">
-            <button class="button is-primary is-outlined" type="submit">Log in</button>
-          </div>
-        </div>
-      </form>
+    <div id="navbarBasicExample" class="navbar-menu {{isActive}}">
+      <div class="navbar-start" *ngIf="accountService.currentUser | async">
+        <a class="navbar-item">
+          Match
+        </a>
 
+        <a class="navbar-item">
+          Link
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Messages
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              About
+            </a>
+            <a class="navbar-item">
+              Jobs
+            </a>
+            <a class="navbar-item">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable" *ngIf="accountService.currentUser | async">
+          <a class="navbar-link">
+            Welcome User
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              Edit Profile
+            </a>
+            <a class="navbar-item" (click)="logout()">
+              Logout
+            </a>
+          </div>
+        </div>
+
+        <form *ngIf="(accountService.currentUser | async) === null" #loginForm="ngForm" class="field-body" (ngSubmit)="login()">
+          <div class="navbar-item">
+            <div class="control">
+              <input [(ngModel)]="userModel.userName" class="input" type="text" name="user" id="user"
+                placeholder="User">
+            </div>
+          </div>
+          <div class="navbar-item">
+            <div class="control">
+              <input [(ngModel)]="userModel.password" class="input" type="password" name="password" id="password"
+                placeholder="Password">
+            </div>
+          </div>
+          <div class="navbar-item">
+            <div class="buttons">
+              <button class="button is-primary is-outlined" type="submit">Log in</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
     </div>
   </div>
 </nav>
